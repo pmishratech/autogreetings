@@ -1,0 +1,16 @@
+package com.autogreetings.logger;
+
+import org.apache.log4j.Logger;
+
+public class GreetingsLogger {
+
+	private static Logger logger = null;
+
+	public static Logger getLogger(String className) {
+		if (logger == null) {
+			logger = Logger.getLogger(className);
+		}
+		return logger;
+	}
+
+}

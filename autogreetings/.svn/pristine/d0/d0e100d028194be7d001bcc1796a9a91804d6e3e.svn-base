@@ -1,0 +1,10 @@
+package com.autogreetings.invoker;
+
+import com.autogreetings.logger.GreetingsLogger;
+public class Invoker {
+	public static void main(String[] args) {
+		GreetingsLogger.getLogger(Invoker.class.getName()).info("Started Greetings job !!");
+		GreetingsHelper.sendGreetings();
+		GreetingsLogger.getLogger(Invoker.class.getName()).info("Finshed Greetings job !! ");
+	}
+}

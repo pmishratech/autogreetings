@@ -1,0 +1,32 @@
+package com.autogreetings.invoker;
+
+import com.autogreetings.db.DBHelper;
+import com.autogreetings.logger.GreetingsLogger;
+import com.autogreetings.service.GreetingsNotifier;
+import com.autogreetings.serviceImpl.NotifyBirthDayGreetings;
+import com.autogreetings.serviceImpl.NotifyWorkAnniversaryGreetings;
+
+public class GreetingsHelper {
+
+	public static void sendGreetings() {
+		// SMTP server information
+		String host = "smtp.office365.com";
+		String port = "587";
+		String mailFrom = "pankaj.mishra@nagarro.com";
+		String password = "Mar@2016";
+		GreetingsNotifier anniversarymailer = new NotifyWorkAnniversaryGreetings();
+		GreetingsNotifier birthDayMailer = new NotifyBirthDayGreetings();
+		try {
+			System.out.println("mail start");
+			anniversarymailer.sendMail(host, port, mailFrom, password);
+			birthDayMailer.sendMail(host, port, mailFrom, password);
+			DBHelper.closeConnection();
+			System.out.println("mail sent");;
+			GreetingsLogger.getLogger(NotifyBirthDayGreetings.class.getName()).info("Greetings Sent");
+		} catch (Exception ex) {
+			GreetingsLogger.getLogger(NotifyBirthDayGreetings.class.getName()).info("Mail job failed "+ ex.getLocalizedMessage());
+			GreetingsLogger.getLogger(NotifyBirthDayGreetings.class.getName()).info(ex.getCause());
+			ex.printStackTrace();
+		}
+	}
+}
